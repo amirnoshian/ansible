@@ -1,0 +1,24 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:
+    apt:
+      upgrade: dist
+      update_cache: yes
+  tasks:
+  - name:
+    apt:
+      name: sl
+      state: latest
+  tasks:
+  - name:
+    tags: jcal
+    apt:
+      name: jcal
+      state: latest
+  - name:
+    tags: tmux
+    apt:
+      name: tmux
+      

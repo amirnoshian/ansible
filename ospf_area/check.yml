@@ -1,0 +1,10 @@
+---
+- hosts: r1
+  become: yes
+  gather_facts: false
+  tasks:  
+  - name: check confuguration ospf 
+    ios_command:
+      commands:
+         - sho ip int br
+

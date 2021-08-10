@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:
+    unarchive:
+       src: ww.sdsd.com
+       dest: sdsad
+       remote_src: yes
+       owner: root

@@ -1,0 +1,63 @@
+---
+- hosts: mls2 
+  become: yes
+  gather_facts: false
+  vars:
+     ifs:
+       f0/1:
+          name: "0/1"
+          type: "ethernet"
+          ip: "192.168.1.2"
+          mask: "255.255.255.0"
+       f0/2:
+          name: "0/2"
+          type: "ethernet"
+          ip: "192.168.2.1"
+          mask: "255.255.255.0"
+
+     vln:
+       v10:     
+         name: "10"
+         type: "vlan"
+         ip: "10.10.10.2"
+         mask: "255.255.255.0"
+         ipstandby: "10.10.10.3"
+         standby: "1 priority 110"    
+       v20:
+         name: "20"
+         type: "vlan"
+         ip: "20.20.20.2"
+         mask: "255.255.255.0"
+         ipstandby: "20.20.20.3"
+         standby: " 1 priority 110"    
+       v30:
+         name: "30"
+         type: "vlan"
+         ip: "30.30.30.2"
+         mask: "255.255.255.0"
+         ipstandby: "30.30.30.3"
+         standby: "1 priority 110"    
+  tasks:
+  - name: 
+    ios_config:
+      lines:
+        - standby {{item.value.standby}}
+        - ip add {{ item.value.ip }} {{ item.value.mask }}
+      parents: interface {{ item.value.type }} {{ item.value.name }}
+    loop: "{{ lookup('dict' , vln) }}"
+
+  tasks:
+  - name: 
+    ios_config:
+      lines:
+        - ip add {{ item.value.ip }} {{ item.value.mask }}
+      parents: interface {{ item.value.type }} {{ item.value.name }}
+    loop: "{{ lookup('dict' , ifs) }}"
+  tasks:
+  - name: 
+    ios_config:
+      lines:
+        - vtp mode server
+        - vtp domain m
+        - vtp version 2
+

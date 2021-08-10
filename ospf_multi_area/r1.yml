@@ -1,0 +1,17 @@
+---
+ - hosts: r1 
+   gather_facts: false
+   vars:
+     ifs:
+       if0/2:
+         name: "0/2"
+         ip: "192.168.1.1"
+         mask: "255.255.255.0"
+         type: "ethernet"
+ - name : config
+   ios_config:
+     lines:
+       - ip address {{item.value.ip}} {{item.value.mask}}
+       - no shut
+      parents: interface ethernet 0/2
+

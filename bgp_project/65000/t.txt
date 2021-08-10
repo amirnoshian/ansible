@@ -1,0 +1,605 @@
+ansible-playbook 2.9.6
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/merlini/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  executable location = /usr/bin/ansible-playbook
+  python version = 3.8.2 (default, Jul 16 2020, 14:00:26) [GCC 9.3.0]
+Using /etc/ansible/ansible.cfg as config file
+setting up inventory plugins
+host_list declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+script declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+auto declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+yaml declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+Parsed /home/merlini/ansible/bgp_project/65000/hosts.ini inventory source with ini plugin
+Loading callback plugin default of type stdout, v2.0 from /usr/lib/python3/dist-packages/ansible/plugins/callback/default.py
+
+PLAYBOOK: r1.yml *****************************************************************************************************
+Positional arguments: r1.yml
+verbosity: 4
+connection: smart
+timeout: 10
+become_method: sudo
+tags: ('all',)
+inventory: ('/home/merlini/ansible/bgp_project/65000/hosts.ini',)
+forks: 5
+1 plays in r1.yml
+
+PLAY [r1] ************************************************************************************************************
+META: ran handlers
+
+TASK [Test Connection] ***********************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r1.yml:9
+<192.168.122.186> attempting to start connection
+<192.168.122.186> using connection plugin network_cli
+<192.168.122.186> local domain socket does not exist, starting it
+<192.168.122.186> control socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> local domain socket listeners started successfully
+<192.168.122.186> loaded cliconf plugin ios from path /usr/lib/python3/dist-packages/ansible/plugins/cliconf/ios.py for network_os ios
+<192.168.122.186> 
+<192.168.122.186> local domain socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.186> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109084.1400073-179468500628492 `" && echo ansible-tmp-1598109084.1400073-179468500628492="` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109084.1400073-179468500628492 `" ) && sleep 0'
+<r1> Attempting python interpreter discovery
+<192.168.122.186> EXEC /bin/sh -c 'echo PLATFORM; uname; echo FOUND; command -v '"'"'/usr/bin/python'"'"'; command -v '"'"'python3.7'"'"'; command -v '"'"'python3.6'"'"'; command -v '"'"'python3.5'"'"'; command -v '"'"'python2.7'"'"'; command -v '"'"'python2.6'"'"'; command -v '"'"'/usr/libexec/platform-python'"'"'; command -v '"'"'/usr/bin/python3'"'"'; command -v '"'"'python'"'"'; echo ENDFOUND && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_command.py
+<192.168.122.186> PUT /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/tmp1glt13ri TO /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109084.1400073-179468500628492/AnsiballZ_ios_command.py
+<192.168.122.186> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109084.1400073-179468500628492/ /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109084.1400073-179468500628492/AnsiballZ_ios_command.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109084.1400073-179468500628492/AnsiballZ_ios_command.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109084.1400073-179468500628492/ > /dev/null 2>&1 && sleep 0'
+ok: [r1] => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "auth_pass": null,
+            "authorize": null,
+            "commands": [
+                "show clock",
+                "show ip int br"
+            ],
+            "host": null,
+            "interval": 1,
+            "match": "all",
+            "password": null,
+            "port": null,
+            "provider": null,
+            "retries": 10,
+            "ssh_keyfile": null,
+            "timeout": null,
+            "username": null,
+            "wait_for": null
+        }
+    },
+    "stdout": [
+        "*17:11:24.520 EET Sat Aug 22 2020",
+        "Interface                  IP-Address      OK? Method Status                Protocol\nEthernet0/0                192.168.122.186 YES DHCP   up                    up      \nEthernet0/1                192.168.1.1     YES NVRAM  up                    up      \nEthernet0/2                192.168.2.1     YES NVRAM  up                    up      \nEthernet0/3                unassigned      YES NVRAM  administratively down down    \nEthernet1/0                unassigned      YES NVRAM  administratively down down    \nEthernet1/1                unassigned      YES NVRAM  administratively down down    \nEthernet1/2                unassigned      YES NVRAM  administratively down down    \nEthernet1/3                unassigned      YES NVRAM  administratively down down    \nEthernet2/0                unassigned      YES NVRAM  administratively down down    \nEthernet2/1                unassigned      YES NVRAM  administratively down down    \nEthernet2/2                unassigned      YES NVRAM  administratively down down    \nEthernet2/3                unassigned      YES NVRAM  administratively down down    \nEthernet3/0                unassigned      YES NVRAM  administratively down down    \nEthernet3/1                unassigned      YES NVRAM  administratively down down    \nEthernet3/2                unassigned      YES NVRAM  administratively down down    \nEthernet3/3                unassigned      YES NVRAM  administratively down down    \nLoopback0                  1.1.1.1         YES NVRAM  up                    up"
+    ],
+    "stdout_lines": [
+        [
+            "*17:11:24.520 EET Sat Aug 22 2020"
+        ],
+        [
+            "Interface                  IP-Address      OK? Method Status                Protocol",
+            "Ethernet0/0                192.168.122.186 YES DHCP   up                    up      ",
+            "Ethernet0/1                192.168.1.1     YES NVRAM  up                    up      ",
+            "Ethernet0/2                192.168.2.1     YES NVRAM  up                    up      ",
+            "Ethernet0/3                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet1/0                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet1/1                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet1/2                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet1/3                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet2/0                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet2/1                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet2/2                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet2/3                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet3/0                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet3/1                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet3/2                unassigned      YES NVRAM  administratively down down    ",
+            "Ethernet3/3                unassigned      YES NVRAM  administratively down down    ",
+            "Loopback0                  1.1.1.1         YES NVRAM  up                    up"
+        ]
+    ]
+}
+
+TASK [BGP Config] ****************************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r1.yml:17
+<192.168.122.186> attempting to start connection
+<192.168.122.186> using connection plugin network_cli
+<192.168.122.186> found existing local domain socket, using it!
+<192.168.122.186> ssh connection done, setting terminal
+<192.168.122.186> loaded terminal plugin for network_os ios
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> firing event: on_open_shell()
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> firing event: on_become
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> ssh connection has completed successfully
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> updating play_context for connection
+<192.168.122.186> 
+<192.168.122.186> local domain socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.186> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109085.1368299-138952400957859 `" && echo ansible-tmp-1598109085.1368299-138952400957859="` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109085.1368299-138952400957859 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_config.py
+<192.168.122.186> PUT /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/tmp5xp79cop TO /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109085.1368299-138952400957859/AnsiballZ_ios_config.py
+<192.168.122.186> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109085.1368299-138952400957859/ /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109085.1368299-138952400957859/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109085.1368299-138952400957859/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109085.1368299-138952400957859/ > /dev/null 2>&1 && sleep 0'
+changed: [r1] => {
+    "banners": {},
+    "changed": true,
+    "commands": [
+        "router bgp 65000",
+        "neighbor 5.5.5.5.5 update-source loopback 0",
+        "neighbor 5.5.5.5 ebgp-multihop",
+        "neighbor 9.9.9.9 update-source loopback 0",
+        "neighbor 9.9.9.9 ebgp-multihop"
+    ],
+    "invocation": {
+        "module_args": {
+            "after": null,
+            "auth_pass": null,
+            "authorize": null,
+            "backup": false,
+            "backup_options": null,
+            "before": null,
+            "defaults": false,
+            "diff_against": null,
+            "diff_ignore_lines": null,
+            "host": null,
+            "intended_config": null,
+            "lines": [
+                "neighbor 5.5.5.5 remote-as 65001",
+                "neighbor 5.5.5.5.5 update-source loopback 0",
+                "neighbor 5.5.5.5 ebgp-multihop",
+                "neighbor 9.9.9.9 remote-as 65002",
+                "neighbor 9.9.9.9 update-source loopback 0",
+                "neighbor 9.9.9.9 ebgp-multihop"
+            ],
+            "match": "line",
+            "multiline_delimiter": "@",
+            "parents": [
+                "router bgp 65000"
+            ],
+            "password": null,
+            "port": null,
+            "provider": null,
+            "replace": "line",
+            "running_config": null,
+            "save_when": "never",
+            "src": null,
+            "ssh_keyfile": null,
+            "timeout": null,
+            "username": null
+        }
+    },
+    "updates": [
+        "router bgp 65000",
+        "neighbor 5.5.5.5.5 update-source loopback 0",
+        "neighbor 5.5.5.5 ebgp-multihop",
+        "neighbor 9.9.9.9 update-source loopback 0",
+        "neighbor 9.9.9.9 ebgp-multihop"
+    ]
+}
+
+TASK [loopback] ******************************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r1.yml:31
+<192.168.122.186> attempting to start connection
+<192.168.122.186> using connection plugin network_cli
+<192.168.122.186> found existing local domain socket, using it!
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> updating play_context for connection
+<192.168.122.186> 
+<192.168.122.186> local domain socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.186> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109086.936372-91625533964490 `" && echo ansible-tmp-1598109086.936372-91625533964490="` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109086.936372-91625533964490 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_config.py
+<192.168.122.186> PUT /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/tmp6ncfag52 TO /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109086.936372-91625533964490/AnsiballZ_ios_config.py
+<192.168.122.186> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109086.936372-91625533964490/ /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109086.936372-91625533964490/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109086.936372-91625533964490/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109086.936372-91625533964490/ > /dev/null 2>&1 && sleep 0'
+changed: [r1] => {
+    "banners": {},
+    "changed": true,
+    "commands": [
+        "interface  loop 0",
+        "ip addres 1.1.1.1 255.255.255.255",
+        "no shut"
+    ],
+    "invocation": {
+        "module_args": {
+            "after": null,
+            "auth_pass": null,
+            "authorize": null,
+            "backup": false,
+            "backup_options": null,
+            "before": null,
+            "defaults": false,
+            "diff_against": null,
+            "diff_ignore_lines": null,
+            "host": null,
+            "intended_config": null,
+            "lines": [
+                "ip addres 1.1.1.1 255.255.255.255",
+                "no shut"
+            ],
+            "match": "line",
+            "multiline_delimiter": "@",
+            "parents": [
+                "interface  loop 0"
+            ],
+            "password": null,
+            "port": null,
+            "provider": null,
+            "replace": "line",
+            "running_config": null,
+            "save_when": "never",
+            "src": null,
+            "ssh_keyfile": null,
+            "timeout": null,
+            "username": null
+        }
+    },
+    "updates": [
+        "interface  loop 0",
+        "ip addres 1.1.1.1 255.255.255.255",
+        "no shut"
+    ]
+}
+
+TASK [Interface config] **********************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r1.yml:37
+<192.168.122.186> attempting to start connection
+<192.168.122.186> using connection plugin network_cli
+<192.168.122.186> found existing local domain socket, using it!
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> updating play_context for connection
+<192.168.122.186> 
+<192.168.122.186> local domain socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.186> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109088.290852-210101362957259 `" && echo ansible-tmp-1598109088.290852-210101362957259="` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109088.290852-210101362957259 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_config.py
+<192.168.122.186> PUT /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/tmpwdp_aa24 TO /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109088.290852-210101362957259/AnsiballZ_ios_config.py
+<192.168.122.186> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109088.290852-210101362957259/ /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109088.290852-210101362957259/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109088.290852-210101362957259/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109088.290852-210101362957259/ > /dev/null 2>&1 && sleep 0'
+changed: [r1] => {
+    "banners": {},
+    "changed": true,
+    "commands": [
+        "interface ether 0/1",
+        "ip addres 192.168.1.1 255.255.255.0",
+        "no shut"
+    ],
+    "invocation": {
+        "module_args": {
+            "after": null,
+            "auth_pass": null,
+            "authorize": null,
+            "backup": false,
+            "backup_options": null,
+            "before": null,
+            "defaults": false,
+            "diff_against": null,
+            "diff_ignore_lines": null,
+            "host": null,
+            "intended_config": null,
+            "lines": [
+                "ip addres 192.168.1.1 255.255.255.0",
+                "no shut"
+            ],
+            "match": "line",
+            "multiline_delimiter": "@",
+            "parents": [
+                "interface ether 0/1"
+            ],
+            "password": null,
+            "port": null,
+            "provider": null,
+            "replace": "line",
+            "running_config": null,
+            "save_when": "never",
+            "src": null,
+            "ssh_keyfile": null,
+            "timeout": null,
+            "username": null
+        }
+    },
+    "updates": [
+        "interface ether 0/1",
+        "ip addres 192.168.1.1 255.255.255.0",
+        "no shut"
+    ]
+}
+
+TASK [static route] **************************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r1.yml:43
+<192.168.122.186> attempting to start connection
+<192.168.122.186> using connection plugin network_cli
+<192.168.122.186> found existing local domain socket, using it!
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> updating play_context for connection
+<192.168.122.186> 
+<192.168.122.186> local domain socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.186> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109089.672845-99777623145040 `" && echo ansible-tmp-1598109089.672845-99777623145040="` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109089.672845-99777623145040 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_config.py
+<192.168.122.186> PUT /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/tmp8a6g3u4j TO /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109089.672845-99777623145040/AnsiballZ_ios_config.py
+<192.168.122.186> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109089.672845-99777623145040/ /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109089.672845-99777623145040/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109089.672845-99777623145040/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109089.672845-99777623145040/ > /dev/null 2>&1 && sleep 0'
+ok: [r1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "after": null,
+            "auth_pass": null,
+            "authorize": null,
+            "backup": false,
+            "backup_options": null,
+            "before": null,
+            "defaults": false,
+            "diff_against": null,
+            "diff_ignore_lines": null,
+            "host": null,
+            "intended_config": null,
+            "lines": [
+                "ip route 5.5.5.5 255.255.255.255 192.168.1.2",
+                "ip route 9.9.9.9 255.255.255.255 192.168.2.2"
+            ],
+            "match": "line",
+            "multiline_delimiter": "@",
+            "parents": null,
+            "password": null,
+            "port": null,
+            "provider": null,
+            "replace": "line",
+            "running_config": null,
+            "save_when": "never",
+            "src": null,
+            "ssh_keyfile": null,
+            "timeout": null,
+            "username": null
+        }
+    }
+}
+
+TASK [Interface config] **********************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r1.yml:51
+<192.168.122.186> attempting to start connection
+<192.168.122.186> using connection plugin network_cli
+<192.168.122.186> found existing local domain socket, using it!
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> updating play_context for connection
+<192.168.122.186> 
+<192.168.122.186> local domain socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.186> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109090.4557846-187889006898507 `" && echo ansible-tmp-1598109090.4557846-187889006898507="` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109090.4557846-187889006898507 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_config.py
+<192.168.122.186> PUT /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/tmpc9towa7s TO /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109090.4557846-187889006898507/AnsiballZ_ios_config.py
+<192.168.122.186> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109090.4557846-187889006898507/ /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109090.4557846-187889006898507/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109090.4557846-187889006898507/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109090.4557846-187889006898507/ > /dev/null 2>&1 && sleep 0'
+changed: [r1] => {
+    "banners": {},
+    "changed": true,
+    "commands": [
+        "interface  Ethernet 0/2",
+        "ip addres 192.168.2.1 255.255.255.0",
+        "no shut"
+    ],
+    "invocation": {
+        "module_args": {
+            "after": null,
+            "auth_pass": null,
+            "authorize": null,
+            "backup": false,
+            "backup_options": null,
+            "before": null,
+            "defaults": false,
+            "diff_against": null,
+            "diff_ignore_lines": null,
+            "host": null,
+            "intended_config": null,
+            "lines": [
+                "ip addres 192.168.2.1 255.255.255.0",
+                "no shut"
+            ],
+            "match": "line",
+            "multiline_delimiter": "@",
+            "parents": [
+                "interface  Ethernet 0/2"
+            ],
+            "password": null,
+            "port": null,
+            "provider": null,
+            "replace": "line",
+            "running_config": null,
+            "save_when": "never",
+            "src": null,
+            "ssh_keyfile": null,
+            "timeout": null,
+            "username": null
+        }
+    },
+    "updates": [
+        "interface  Ethernet 0/2",
+        "ip addres 192.168.2.1 255.255.255.0",
+        "no shut"
+    ]
+}
+
+TASK [save config] ***************************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r1.yml:59
+<192.168.122.186> attempting to start connection
+<192.168.122.186> using connection plugin network_cli
+<192.168.122.186> found existing local domain socket, using it!
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> Response received, triggered 'persistent_buffer_read_timeout' timer of 0.1 seconds
+<192.168.122.186> updating play_context for connection
+<192.168.122.186> 
+<192.168.122.186> local domain socket path is /home/merlini/.ansible/pc/85d059de9b
+<192.168.122.186> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.186> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109091.8212426-184160732668044 `" && echo ansible-tmp-1598109091.8212426-184160732668044="` echo /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109091.8212426-184160732668044 `" ) && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_command.py
+<192.168.122.186> PUT /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/tmp_7iww8h_ TO /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109091.8212426-184160732668044/AnsiballZ_ios_command.py
+<192.168.122.186> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109091.8212426-184160732668044/ /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109091.8212426-184160732668044/AnsiballZ_ios_command.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109091.8212426-184160732668044/AnsiballZ_ios_command.py && sleep 0'
+<192.168.122.186> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22629epzvs0cm/ansible-tmp-1598109091.8212426-184160732668044/ > /dev/null 2>&1 && sleep 0'
+ok: [r1] => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "auth_pass": null,
+            "authorize": null,
+            "commands": [
+                "wr"
+            ],
+            "host": null,
+            "interval": 1,
+            "match": "all",
+            "password": null,
+            "port": null,
+            "provider": null,
+            "retries": 10,
+            "ssh_keyfile": null,
+            "timeout": null,
+            "username": null,
+            "wait_for": null
+        }
+    },
+    "stdout": [
+        "Building configuration...\n[OK]"
+    ],
+    "stdout_lines": [
+        [
+            "Building configuration...",
+            "[OK]"
+        ]
+    ]
+}
+META: ran handlers
+META: ran handlers
+
+PLAY RECAP ***********************************************************************************************************
+r1                         : ok=7    changed=4    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0   
+
+ansible-playbook 2.9.6
+  config file = /etc/ansible/ansible.cfg
+  configured module search path = ['/home/merlini/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /usr/lib/python3/dist-packages/ansible
+  executable location = /usr/bin/ansible-playbook
+  python version = 3.8.2 (default, Jul 16 2020, 14:00:26) [GCC 9.3.0]
+Using /etc/ansible/ansible.cfg as config file
+setting up inventory plugins
+host_list declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+script declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+auto declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+yaml declined parsing /home/merlini/ansible/bgp_project/65000/hosts.ini as it did not pass its verify_file() method
+Parsed /home/merlini/ansible/bgp_project/65000/hosts.ini inventory source with ini plugin
+Loading callback plugin default of type stdout, v2.0 from /usr/lib/python3/dist-packages/ansible/plugins/callback/default.py
+
+PLAYBOOK: r2.yml *****************************************************************************************************
+Positional arguments: r2.yml
+verbosity: 4
+connection: smart
+timeout: 10
+become_method: sudo
+tags: ('all',)
+inventory: ('/home/merlini/ansible/bgp_project/65000/hosts.ini',)
+forks: 5
+1 plays in r2.yml
+
+PLAY [r2] ************************************************************************************************************
+META: ran handlers
+
+TASK [BGP Config] ****************************************************************************************************
+task path: /home/merlini/ansible/bgp_project/65000/r2.yml:16
+<192.168.122.73> attempting to start connection
+<192.168.122.73> using connection plugin network_cli
+<192.168.122.73> local domain socket does not exist, starting it
+<192.168.122.73> control socket path is /home/merlini/.ansible/pc/fcf7d6240d
+<192.168.122.73> local domain socket listeners started successfully
+<192.168.122.73> loaded cliconf plugin ios from path /usr/lib/python3/dist-packages/ansible/plugins/cliconf/ios.py for network_os ios
+<192.168.122.73> 
+<192.168.122.73> local domain socket path is /home/merlini/.ansible/pc/fcf7d6240d
+<192.168.122.73> ESTABLISH LOCAL CONNECTION FOR USER: merlini
+<192.168.122.73> EXEC /bin/sh -c '( umask 77 && mkdir -p "` echo /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939 `" && echo ansible-tmp-1598109121.6355083-130968249381939="` echo /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939 `" ) && sleep 0'
+<r2> Attempting python interpreter discovery
+<192.168.122.73> EXEC /bin/sh -c 'echo PLATFORM; uname; echo FOUND; command -v '"'"'/usr/bin/python'"'"'; command -v '"'"'python3.7'"'"'; command -v '"'"'python3.6'"'"'; command -v '"'"'python3.5'"'"'; command -v '"'"'python2.7'"'"'; command -v '"'"'python2.6'"'"'; command -v '"'"'/usr/libexec/platform-python'"'"'; command -v '"'"'/usr/bin/python3'"'"'; command -v '"'"'python'"'"'; echo ENDFOUND && sleep 0'
+<192.168.122.73> EXEC /bin/sh -c '/usr/bin/python && sleep 0'
+Using module file /usr/lib/python3/dist-packages/ansible/modules/network/ios/ios_config.py
+<192.168.122.73> PUT /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/tmprtd82ibh TO /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py
+<192.168.122.73> EXEC /bin/sh -c 'chmod u+x /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/ /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.73> EXEC /bin/sh -c '/usr/bin/python /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py && sleep 0'
+<192.168.122.73> EXEC /bin/sh -c 'rm -f -r /home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/ > /dev/null 2>&1 && sleep 0'
+The full traceback is:
+Traceback (most recent call last):
+  File "/home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py", line 102, in <module>
+    _ansiballz_main()
+  File "/home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py", line 94, in _ansiballz_main
+    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)
+  File "/home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py", line 40, in invoke_module
+    runpy.run_module(mod_name='ansible.modules.network.ios.ios_config', init_globals=None, run_name='__main__', alter_sys=True)
+  File "/usr/lib/python2.7/runpy.py", line 188, in run_module
+    fname, loader, pkg_name)
+  File "/usr/lib/python2.7/runpy.py", line 82, in _run_module_code
+    mod_name, mod_fname, mod_loader, pkg_name)
+  File "/usr/lib/python2.7/runpy.py", line 72, in _run_code
+    exec code in run_globals
+  File "/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/modules/network/ios/ios_config.py", line 569, in <module>
+  File "/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/modules/network/ios/ios_config.py", line 500, in main
+  File "/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/modules/network/ios/ios_config.py", line 364, in edit_config_or_macro
+  File "/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/module_utils/connection.py", line 185, in __rpc__
+ansible.module_utils.connection.ConnectionError: ate-source loopback 0 neighbor 6.6.6.6 ebgp-m neighbor 10.10.10.10 remote-as 65002 neighbor 10.10.10.10 update-source loopback 0 neighbor 10.10.10.10 ebgp-m
+                                  ^
+% Invalid input detected at '^' marker.
+
+r2(config-router)#
+fatal: [r2]: FAILED! => {
+    "ansible_facts": {
+        "discovered_interpreter_python": "/usr/bin/python"
+    },
+    "changed": false,
+    "module_stderr": "Traceback (most recent call last):\n  File \"/home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py\", line 102, in <module>\n    _ansiballz_main()\n  File \"/home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py\", line 94, in _ansiballz_main\n    invoke_module(zipped_mod, temp_path, ANSIBALLZ_PARAMS)\n  File \"/home/merlini/.ansible/tmp/ansible-local-22843kuh314t7/ansible-tmp-1598109121.6355083-130968249381939/AnsiballZ_ios_config.py\", line 40, in invoke_module\n    runpy.run_module(mod_name='ansible.modules.network.ios.ios_config', init_globals=None, run_name='__main__', alter_sys=True)\n  File \"/usr/lib/python2.7/runpy.py\", line 188, in run_module\n    fname, loader, pkg_name)\n  File \"/usr/lib/python2.7/runpy.py\", line 82, in _run_module_code\n    mod_name, mod_fname, mod_loader, pkg_name)\n  File \"/usr/lib/python2.7/runpy.py\", line 72, in _run_code\n    exec code in run_globals\n  File \"/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/modules/network/ios/ios_config.py\", line 569, in <module>\n  File \"/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/modules/network/ios/ios_config.py\", line 500, in main\n  File \"/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/modules/network/ios/ios_config.py\", line 364, in edit_config_or_macro\n  File \"/tmp/ansible_ios_config_payload_zfrjc8/ansible_ios_config_payload.zip/ansible/module_utils/connection.py\", line 185, in __rpc__\nansible.module_utils.connection.ConnectionError: ate-source loopback 0 neighbor 6.6.6.6 ebgp-m neighbor 10.10.10.10 remote-as 65002 neighbor 10.10.10.10 update-source loopback 0 neighbor 10.10.10.10 ebgp-m\r\n                                  ^\r\n% Invalid input detected at '^' marker.\r\n\r\nr2(config-router)#\n",
+    "module_stdout": "",
+    "msg": "MODULE FAILURE\nSee stdout/stderr for the exact error",
+    "rc": 1
+}
+
+PLAY RECAP ***********************************************************************************************************
+r2                         : ok=0    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+

@@ -1,0 +1,9 @@
+---
+- hosts: r1
+  become: yes
+  gather_facts: false
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - sho bgp sum 

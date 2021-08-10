@@ -1,0 +1,13 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:
+    authorized_key:
+        user: simon
+        key: "~.ssh/ansible"
+  - name:
+      src: sudoer-simon
+      dst: /etc/sudoer
+# baray tanzim user baray dastresi 
+      

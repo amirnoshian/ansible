@@ -1,0 +1,8 @@
+---
+- hosts: r1
+  gather_facts: false
+  become: yes
+  tasks:
+  - name: config
+    ios_config:
+      src: "eigrp_template.j2"

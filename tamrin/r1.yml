@@ -1,0 +1,10 @@
+---
+ - hosts: routers
+   become: yes
+   gather_facts: false
+   tasks:   
+   - name: sd
+     ios_config:
+       lines:
+       - no shut
+       parents: interface ether 0/2

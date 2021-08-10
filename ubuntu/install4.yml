@@ -1,0 +1,27 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:
+    tags: update
+    apt:
+      upgrade_dist: yes
+      update_cache: yes
+  tasks:
+  - name:
+    apt:
+      name: sl
+      state: absent
+  tasks:
+  - name:
+    apt:
+      name: jcal
+      state: absent
+      tags: jcal
+  - name: cp
+    tags: html
+    copy:
+      src: apache/apache2.html
+      dest: /var/www/html
+      owner: root
+      mode: 755

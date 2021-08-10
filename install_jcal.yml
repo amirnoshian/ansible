@@ -1,0 +1,10 @@
+---
+- hosts: all
+  tasks:
+
+  - name: update repository 
+    apt: 
+      update_cache: yes
+    when: ansible_distribution == "ubuntu"
+#state ro halat latest bashe akhrain version mirize 
+#cache update shod cowsay pak shod chon state absent hat#

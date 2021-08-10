@@ -1,0 +1,93 @@
+---
+- hosts: r5
+  become: yes
+  gather_facts: false
+  vars:
+    - bgp_asnumber_65000: 65000
+    - bgp_asnumber_65003: 65003
+    - bgp_asnumber_65004: 65004
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - bgp
+
+  - name: BGP Config
+    ios_config:
+      lines:
+        - neighbor 3.3.3.3 remote-as {{ bgp_asnumber_65000 }}
+        - neighbor 3.3.3.3 ebgp-multi
+        - neighbor 3.3.3.3  update-source loopback 0 
+        - neighbor 1.1.1.1 ebgp-multihop
+        - neighbor 1.1.1.1  update-source loopback 0 
+        - neighbor 1.1.1.1 ebgp-multihop
+        - neighbor 8.8.8.8 remote-as {{ bgp_asnumber_65004 }}
+        - neighbor 8.8.8.8 update-source loopback 0 
+        - neighbor 8.8.8.8  ebgp-multihop 
+        - neighbor 7.7.7.7 remote-as {{ bgp_asnumber_65003}}
+        - neighbor 7.7.7.7 update-source loopback 0
+        - neighbor 7.7.7.7 ebgp-multihop
+      parents: router bgp 65001
+    tags:
+      - bgp
+
+
+  - name: loopback
+    ios_config:
+      lines:
+        - ip addres 5.5.5.5 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 192.168.1.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/1
+  - name: static
+    ios_config:
+      lines:
+        - ip route 1.1.1.1 255.255.255.255 192.168.1.1
+        - ip route 7.7.7.7 255.255.255.255 172.168.1.2
+        - ip route 3.3.3.3 255.255.255.255 192.168.5.1
+        - ip route 8.8.8.8 255.255.255.255 192.168.2.2
+    tags:
+      - config 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 192.168.5.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 1/0
+    tags:
+      - config 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 172.16.1.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+    tags:
+      - config 
+        
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 172.16.2.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/3
+    tags:
+      - config 
+
+  - name: save config
+    ios_command:
+      commands:
+        - wr
+        - show ip int br
+    tags:
+      - save

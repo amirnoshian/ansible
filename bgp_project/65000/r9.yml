@@ -1,0 +1,59 @@
+---
+- hosts: r9
+  become: yes
+  gather_facts: false
+  vars:
+    - ospf_no: 2
+    - bgp_asnumber_65000: 65000
+      # - bgp_asnumer_65002: 65002
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - bgp
+
+  - name: BGP Config
+    ios_config:
+      lines:
+       - network 9.9.9.9 
+       - neighbor 10.10.2.1 remote-as {{ bgp_asnumber_65000 }}
+       - neighbor 10.10.3.1 remote-as {{ bgp_asnumber_65000 }}
+         # - neighbor 10.10.2.2 remote-as {{ bgp_asnumer_65002 }}
+       - neighbor 1.1.1.1 remote-as {{ bgp_asnumber_65000 }}
+       - neighbor 3.3.3.3 remote-as {{ bgp_asnumber_65000 }}
+      parents: router bgp 65000
+    tags:
+      - bgp
+
+
+  - name: loopback
+    ios_config:
+      lines:
+        - ip addres 9.9.9.9 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 10.10.6.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 1/1
+    tags:
+      - config 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 10.10.2.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+    tags:
+      - config 
+  - name: save config
+    ios_command:
+      commands:
+        - wr
+        - show ip int br

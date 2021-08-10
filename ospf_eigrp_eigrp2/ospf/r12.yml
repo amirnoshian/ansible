@@ -1,0 +1,59 @@
+---
+- hosts: r12
+  become: yes
+  gather_facts: false
+  vars:
+    - eigrp: 0 
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+
+  - name : loopbacl
+    ios_config:
+      lines:
+        - ip addr 12.12.12.12 255.255.255.0
+        - no shut
+      parents: interface loopback 1
+         
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 20.20.2.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/1
+    tags:
+      - fast 0/1 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 20.20.3.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+    tags:
+      - config fast 0/2
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 191.168.7.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 1/1
+      
+  - name: config ospf
+    ios_config: 
+      lines:
+        - network 191.168.7.1 0.0.0.255 area 0
+        - network 20.20.2.2 0.0.0.255 area 0
+        - network 20.20.3.1 0.0.0.255 area 0
+      parents: router ospf 1 
+      ## #################
+  - name: save config
+    ios_command:
+      commands:
+        - wr

@@ -1,0 +1,15 @@
+---
+- hosts: all
+  gather_facts: false
+  vars:
+    backup_dir: "/home/merlini/ansible/ospf_new/backup_file"
+  tasks: 
+  - name: show run on device 
+    ios_command:
+      commands:
+         - show run 
+    register: config
+  - name: save output to file
+    copy:
+      content: "{{config}}"
+      dest: "{{ backup_dir }}/{{ inventory_hostname }}"

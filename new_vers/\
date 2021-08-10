@@ -1,0 +1,26 @@
+ansible_user: m
+ansible_password: m
+ansible_connection: network_cli
+ansible_network_os: ios
+ansible_become_method: enable
+hostname:
+  name: routerxx
+ifs_lookup:
+  int1:
+    addr: 192.168.12.1
+    netmask: 255.255.255.0
+    type: ethernet
+    name: 0/2
+  int2:
+    addr: 192.168.16.1
+    netmask: 255.255.255.0
+    type: ethernet
+    name: 0/1
+eigrp:
+    number: 1
+    network: 192.168.12.1
+    mask: 255.255.255.0
+    
+ifs_dict:
+  - {"addr": "192.168.12.1", "netmask": "255.255.255.0", "type": "ethernet", "name": "0/2"}
+  - {"addr": "192.168.16.1", "netmask": "255.255.255.0", "type": "ethernet", "name": "0/1"}

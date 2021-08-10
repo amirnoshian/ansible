@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:
+    copy:
+      src: amir.txt
+      dest: ~
+      owner: root

@@ -1,0 +1,55 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:
+    apt:
+      upgrade: dist
+      update_cache: yes
+  tasks:
+  - name:
+    apt:
+      name: sl
+      state: absent
+  tasks:
+  - name:
+    apt:
+      name: jcal
+      state: absent
+      tags: jcal
+      roles:
+         - ubuntu
+  - name: cp
+    tags: html
+    copy:
+      src: apache/apache2.html
+      dest: /var/www/html
+      owner: root
+      mode: 755
+  - name:
+    apt:
+     name: 
+       - unzip
+  tasks:
+  - name: install terraform to ubuntu 
+    unarchive:
+       src: https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip
+       dest: /usr/local/bin
+       remote_src: yes
+       mode: 755
+       owner: root
+       group : root
+
+  tasks:
+  - name: stop and start service
+    tags: started
+    service:
+       name: apache2
+       state: started
+
+  - name: change line 
+    tags: change
+    lineinfile:
+       path: /home/amir/mehgit.txt
+       regexp: 'hello'
+       line: "heloooooo"

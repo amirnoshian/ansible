@@ -1,0 +1,57 @@
+---
+- hosts: mls8
+  become: yes
+  gather_facts: false
+  vars:
+    ifs:
+      if1:
+        name: "1/2"
+        address: "10.10.5.2"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+        no_sw: "no switchport"
+      if2:
+        name: "1/3"
+        address: "20.20.5.2"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+        no_sw: "no switchport"
+      lo:
+        name: "0"
+        address: "6.6.6.6"
+        mask: "255.255.255.0"      
+        type: "loop"
+   
+  tasks: 
+  - debug:
+      msg: "key = {{ item.key }}ifname = {{ item.value.name }} addr = {{ item.value.address }} mask = {{ item.value.mask }} type = {{ item.value.type }}"
+    loop: "{{ lookup('dict', ifs) }}"
+
+
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - "{{item.value.no_sw}}"
+        - ip addres {{ item.value.address }} {{ item.value.mask }}
+        - no shut 
+      parents: interface  {{ item.value.type }} {{ item.value.name }}
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+  handlers:
+  - name: save config
+    ios_command:
+      commands:
+        - wr

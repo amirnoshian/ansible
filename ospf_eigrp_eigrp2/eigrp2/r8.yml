@@ -1,0 +1,56 @@
+---
+- hosts: r8
+  become: yes
+  gather_facts: false
+  vars:
+    - eigrp: 0 
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+
+
+  - name: loopback
+    ios_config:
+      lines:
+        - ip addres 8.8.8.8 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 30.30.2.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/1
+    tags:
+      - fast 0/1 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 30.30.3.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+    tags:
+      - config fast 0/2
+
+
+      
+  - name: config eigrp2
+    ios_config: 
+      lines:
+        -  network 30.30.2.2 255.255.255.0
+        -  network 30.30.3.1 255.255.255.0
+        - no network 172.16.3.1 255.255.255.0
+        - no network 172.16.1.2 255.255.255.0 
+      parents: router eigrp 2 
+      ## #################
+  - name: save config
+    ios_command:
+      commands:
+        - wr
+        - sho ip int br 

@@ -1,0 +1,55 @@
+---
+- hosts: r4
+  become: yes
+  gather_facts: false
+  vars:
+    - eigrp: 0 
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+
+
+  - name: loopback
+    ios_config:
+      lines:
+        - ip addres 4.4.4.4 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 10.10.3.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/1
+    tags:
+      - fast 0/1 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 10.10.2.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+    tags:
+      - config fast 0/2
+        ###########################config eigpr################
+  - name: config eigrp
+    ios_config: 
+      lines:
+        - no network 192.168.2.2
+        - no network 192.168.3.1 
+        - no network 30.30.30.1 255.255.255.0 
+        - network 10.10.2.2 255.255.255.0
+        - network 10.10.3.1 255.255.255.0
+      parents: router eigrp 1 
+      ## #################save config ##################
+  - name: save config
+    ios_command:
+      commands:
+        - wr
+        - sho ip int br

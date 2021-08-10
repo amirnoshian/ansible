@@ -1,0 +1,11 @@
+role: edge
+status:
+- ospf
+hostname:
+  name: routerxx
+ospf:
+  - {"ospf":"1", "area":"area 1", "address": "192.168.16.2", "mask": "0.0.0.255"}
+eigrp: 
+  - {"as_number":"1", "network": "192.168.12.1", "mask": "0.0.0.255"}
+ifs_dict:
+  - {"addr": "192.168.16.2", "netmask": "255.255.255.0", "type": "ethernet", "name": "0/1"}

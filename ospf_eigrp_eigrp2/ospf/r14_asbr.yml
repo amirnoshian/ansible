@@ -1,0 +1,77 @@
+---
+- hosts: r14
+  become: yes
+  gather_facts: false
+  vars:
+    - eigrp: 0 
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+
+
+  - name: loopback
+    ios_config:
+      lines:
+        - ip addres 14.14.14.14 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 191.168.5.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/3
+    tags:
+      - fast 0/1 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 191.168.7.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 1/1
+    tags:
+      - config fast 0/2
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 191.168.8.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 1/2
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 191.168.6.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 1/0
+  - name: config eigrp
+    ios_config: 
+      lines:
+        - no network 60.60.60.2 255.255.255.0
+        - no network 80.80.80.2 255.255.255.0
+        - network 191.168.6.2 255.255.255.0
+        - network 191.168.8.2 255.255.255.0
+      parents: router eigrp 2
+      ####
+      
+  - name: config ospf
+    ios_config: 
+      lines:
+        - no network 50.50.50.2 0.0.0.255 area 0
+        - no network 70.70.70.2 0.0.0.255 area 0
+        -  network 191.168.5.2 0.0.0.255 area 0
+        -  network 191.168.7.2 0.0.0.255 area 0
+      parents: router ospf 1 
+      ## #################
+  - name: save config
+    ios_command:
+      commands:
+        - wr
+        - sho ip int br

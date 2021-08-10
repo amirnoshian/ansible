@@ -1,0 +1,5 @@
+---
+- name: This commrectory to somedir/ and will only run when somedir/somelog.txt doesn't exist
+  shell: txt.yml>> somelog.txt
+    cmd: ls -ltrh /
+    chdir: somdir/ 

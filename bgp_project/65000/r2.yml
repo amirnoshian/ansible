@@ -1,0 +1,64 @@
+---
+- hosts: r2
+  become: yes
+  gather_facts: false
+  vars:
+     
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - test
+  tasks:
+  - name: BGP Config
+    ios_config:
+      lines:
+         neighbor 6.6.6.6 remote-as 65001    
+         neighbor 6.6.6.6 update-source loopback 0 
+         neighbor 6.6.6.6 ebgp-m
+         neighbor 10.10.10.10 remote-as 65002    
+         neighbor 10.10.10.10 update-source loopback 0 
+         neighbor 10.10.10.10 ebgp-m
+      parents: router bgp 65000
+    tags:
+      - bgp
+
+  - name: no bgp 
+    ios_config:
+      lines:
+        - no router bgp 65000
+    tags:
+          -nobgp
+  - name: Interface config 0/2
+    ios_config:
+      lines:
+        - ip addr 192.168.3.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+
+  - name : interface ether 0/3  
+    ios_config:
+      lines:
+        - ip addr 192.168.4.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/3
+    tags:
+      - config 
+  - name : static route 
+    ios_config:
+      lines:
+        - ip route 6.6.6.6 255.255.255.255 192.168.3.2
+        - ip route 10.10.10.10 255.255.255.255 192.168.4.2 
+  - name : interface loop 0   
+    ios_config:
+      lines:
+        - ip addr 2.2.2.2 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+  - name : wr
+    ios_command:
+      commands:
+         - wr

@@ -1,0 +1,9 @@
+[router]
+core1:
+core2:
+[l3switch]
+mls1:
+mls2:
+[l2switch]
+switch1:
+switch2:

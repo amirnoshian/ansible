@@ -1,0 +1,52 @@
+---
+- hosts: mls1
+  become: yes
+  gather_facts: false
+  vars:
+    ifs:
+      if1:
+        name: "10"
+        address: "10.10.10.1"
+        mask: "255.255.255.0"      
+        type: "vlan"
+        standby: "10.10.10.3"
+      if2:
+        name: "20"
+        address: "20.20.20.1"
+        mask: "255.255.255.0"      
+        type: "vlan"
+        standby: "20.20.20.3"
+      if3:
+        name: "30"
+        address: "30.30.30.1"
+        mask: "255.255.255.0"      
+        type: "vlan"
+        standby: "30.30.30.3"
+  
+    loop: "{{ lookup('dict', ifs) }}"
+    
+  tasks:
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres {{ item.value.address }} {{ item.value.mask }}
+        - standby 1 ip {{ item.value.stndby }}
+      parents: interface  {{ item.value.type }} {{ item.value.name }}
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+  handlers:
+  - name: save config
+    ios_command:
+      commands:
+        - wr

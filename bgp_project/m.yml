@@ -1,0 +1,17 @@
+---
+- hosts: r2
+  gather_facts: false
+  become: yes
+  tasks:
+  - name: check bgp config core
+    ios_command:
+      commands:
+         - sho ip bgp summ
+    register: ios_output
+
+
+  - name: msg
+    debug:
+     msg: "{{ios_output}}"
+
+

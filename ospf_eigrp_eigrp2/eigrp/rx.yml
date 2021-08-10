@@ -1,0 +1,62 @@
+---
+- hosts: r1
+  become: yes
+  gather_facts: false
+  vars:
+    ifs:
+      if1:
+        name: "0/1"
+        address: "10.10.1.1"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+      if2:
+        name: "0/2"
+        address: "10.10.4.1"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+      lo:
+        name: "0"
+        address: "1.1.1.1"
+        mask: "255.255.255.0"      
+        type: "loop"
+   
+  tasks: 
+  - debug:
+      msg: "key = {{ item.key }}ifname = {{ item.value.name }} addr = {{ item.value.address }} mask = {{ item.value.mask }} type = {{ item.value.type }}"
+    loop: "{{ lookup('dict', ifs) }}"
+
+    
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres {{ item.value.address }} {{ item.value.mask }}
+        - no shut 
+      parents: interface  {{ item.value.type }} {{ item.value.name }}
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+    tags:
+      - fast 0/1 
+
+  - name: config eigrp
+    ios_config: 
+      lines:
+          #- network 10.10.4.1 255.255.255.0
+          #- network 10.10.1.1 255.255.255.0
+        - "network {{ item.value.address }} {{ item.value.mask}}"
+      parents: router eigrp 1 
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+  handlers:
+  - name: save config
+    ios_command:
+      commands:
+        - wr

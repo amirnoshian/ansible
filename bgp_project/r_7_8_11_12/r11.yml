@@ -1,0 +1,61 @@
+---
+- hosts: r11
+  become: yes
+  gather_facts: false
+  vars:
+    - bgp_asnumber_65002: 65002
+    - bgp_asnubmer_65006: 65006
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+  tasks:
+  - name: BGP Config
+    ios_config:
+      lines:
+        - neighbor 9.9.9.9 remote-as {{ bgp_asnumber_65002 }}
+        - neighbor 9.9.9.9 update-source loopback 0
+        - neighbor 9.9.9.9 ebgp-
+        - neighbor 10.10.10.10 remote-as {{ bgp_asnumber_65002 }}
+        - neighbor 10.10.10.10 update-source loopback 0
+        - neighbor 10.10.10.10 ebgp-
+
+      parents: router bgp 65005
+    tags:
+      - bgp
+
+
+  - name: loopback
+    ios_config:
+      lines:
+        - ip addres 11.11.11.11 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+
+  - name: ip static
+    ios_config:
+      lines:
+        - ip route 9.9.9.9 255.255.255.255 172.16.5.1
+        - ip route 10.10.10.10 255.255.255.255 172.16.7.1 
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 172.16.5.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/3
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 172.16.7.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+    tags:
+      - config 
+  - name: save config
+    ios_command:
+      commands:
+        - wr
+        - show ip int br
+        - show ip route

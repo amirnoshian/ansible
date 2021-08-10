@@ -1,0 +1,9 @@
+---
+- hosts: all
+  tasks:
+  - name: check status ospf
+    ios_command: 
+      commands:
+         - show ip eigrp 1 traffic 
+         - show ip ospf 1 
+         - show ip ospf 2 

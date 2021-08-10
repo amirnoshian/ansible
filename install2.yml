@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name:
+    apt:
+      name: sl
+      state: latest
+  #  when: ansible_distribution == "debian"

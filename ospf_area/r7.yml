@@ -1,0 +1,63 @@
+---
+- hosts: r7
+  become: yes
+  gather_facts: false
+  vars:
+    ifs:
+      if1:
+        name: "1/0"
+        address: "10.10.7.2"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+      if1/2:
+        name: "1/2"
+        address: "10.10.8.2"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+      if3:
+        name: "0/3"
+        address: "10.10.9.2"
+        mask: "255.255.255.0" 
+        type: "Ethernet"    
+      if1:
+        name: "1/1"
+        address: "10.10.10.2"
+        mask: "255.255.255.0"      
+        type: "Ethernet"  
+      lo:
+        name: "0"
+        address: "7.7.7.7"
+        mask: "255.255.255.255"      
+        type: "loop"
+   
+    
+  tasks: 
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres {{ item.value.address }} {{ item.value.mask }}
+        - no shut 
+      parents: interface  {{ item.value.type }} {{ item.value.name }}
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+
+  - name: Test Connection
+    ios_config:
+      lines:
+        - network 10.10.7.2 0.0.0.255 area 0
+        - network 10.10.8.2 0.0.0.255 area 0
+        - network 10.10.9.2 0.0.0.255 area 0
+        - network 10.10.10.2 0.0.0.255 area 0
+        - network 7.7.7.7 0.0.0.0 area 0
+      parents: router ospf 1
+    tags:
+      - show commnad
+  handlers:
+  - name: save config
+    ios_command:
+      commands:
+        - wr

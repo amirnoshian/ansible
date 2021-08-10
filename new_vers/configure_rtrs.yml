@@ -1,0 +1,35 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: false
+  tasks:
+    - name: config addres (second attempt)
+      ios_config:
+        lines:
+           ip addres {{item.addr}} {{item.netmask}}
+        parents: interface {{item.type}} {{item.name}}
+      loop: "{{ifs_dict}}"
+
+    - name: config eigrp
+      ios_config:
+        lines:
+           network {{item.network}} {{item.mask}}
+        parents: router eigrp {{item.as_number}}
+      loop: "{{eigrp}}"
+      when: "'eigrp' in status"
+
+    - name: config eigrp  
+      ios_config:
+        lines:
+           network {{item.address}} {{item.mask}} {{item.area}}
+        parents: router ospf {{item.ospf}}
+      loop: "{{ospf}}" 
+      when: "'ospf' in status"
+
+    - debug:
+        msg: "{{item.network}} {{item.mask}} "
+      loop: "{{eigrp}}"
+
+    - debug:
+        msg: "{{item.address}} {{item.mask}} "
+      loop: "{{ospf}}"

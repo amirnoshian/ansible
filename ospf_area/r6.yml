@@ -1,0 +1,57 @@
+---
+- hosts: r6
+  become: yes
+  gather_facts: false
+  vars:
+    ifs:
+      if3:
+        name: "1/1"
+        address: "10.10.10.1"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+      if1:
+        name: "0/1"
+        address: "10.10.5.1"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+      if2:
+        name: "0/2"
+        address: "10.10.6.2"
+        mask: "255.255.255.0"      
+        type: "Ethernet"
+      lo:
+        name: "0"
+        address: "6.6.6.6"
+        mask: "255.255.255.255"      
+        type: "loop"
+   
+    
+  tasks: 
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres {{ item.value.address }} {{ item.value.mask }}
+        - no shut 
+      parents: interface  {{ item.value.type }} {{ item.value.name }}
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+    loop: "{{ lookup('dict', ifs) }}"
+    notify:
+      - save config
+
+  - name: Test Connection
+    ios_config:
+      lines:
+        - network 10.10.10.1 0.0.0.255 area 0
+        - network 10.10.6.2 0.0.0.255 area 0
+        - network 10.10.5.1 0.0.0.255 area 0
+        - network 6.6.6.6 0.0.0.0 area 0
+      parents: router ospf 1
+    tags:
+      - show commnad
+  handlers:
+  - name: save config
+    ios_command:
+      commands:
+        - wr

@@ -1,0 +1,35 @@
+---
+- hosts: ubuntu
+  become: true
+  tasks:
+  - name: copy file to var
+    tags: html
+    copy:
+      src: apache/apache2.html
+      dest: /var/www/html
+      mode: 777
+  - name: add user
+    tags: user
+    user:
+        name: simon 
+        groups: root
+  - name: 
+    lineinfile:
+      path: /home/amir/1.txt
+      regexp: 222
+      line: 333
+  - name:
+    service:
+       name: nginx
+       state: stopped
+       enabled: no
+  - name: install sl in ubuntu
+    apt:
+     name: sl
+     state: absent 
+  pre_tasks:
+  - name: 
+    apt:
+      upgrade: dist
+      update_cache: yes
+

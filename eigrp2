@@ -1,0 +1,59 @@
+---
+- hosts: r10
+  become: yes
+  gather_facts: false
+  vars:
+    - eigrp: 0 
+  tasks: 
+  - name: Test Connection
+    ios_command:
+      commands:
+        - show clock
+        - show ip int br
+    tags:
+      - show commnad
+
+
+  - name: loopback
+    ios_config:
+      lines:
+        - ip addres 10.10.10.10 255.255.255.255
+        - no shut 
+      parents: interface  loop 0
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 128.168.2.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/1
+    tags:
+      - fast 0/1 
+
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 50.50.50.1 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/3
+  - name: Interface config
+    ios_config:
+      lines:
+        - ip addres 128.168.1.2 255.255.255.0
+        - no shut 
+      parents: interface  Ethernet 0/2
+    tags:
+      - config fast 0/2
+
+
+      
+  - name: config ospf
+    ios_config: 
+      lines:
+        - network 128.168.2.1 0.0.0.255 area 0
+        - network 128.168.1.2 0.0.0.255 area 0
+      parents: router ospf 1 
+      ## #################
+  - name: save config
+    ios_command:
+      commands:
+        - wr

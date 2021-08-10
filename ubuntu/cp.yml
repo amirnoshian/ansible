@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: cp file 
+    copy:
+      src: apache/apache2.html
+      dest: /home/amir
+      owner: root
+      mode: 777
