@@ -1,0 +1,7 @@
+---
+- hosts: all 
+  become: true
+  tasks:
+  - name: install apache 2
+    command: sudo apt install apache2 
+  - command: sudo apt install sl
