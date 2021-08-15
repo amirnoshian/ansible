@@ -4,4 +4,20 @@
   tasks:
   - name: install apache 2
     command: sudo apt install apache2 
-  - command: sudo apt install sl
+  - command: sudo apt update
+  tasks:
+  - name: for example jcal install
+    apt: 
+     name: jcal
+     state: present
+     owner: root
+  tasks:
+  - name: install sl
+    shell: sudo apt install sl
+  - name: cp file 
+    copy:
+      src: "/etc/passwd"
+      dest: "/home/amir"
+      owner: root
+      group : root
+      mode: 0644
