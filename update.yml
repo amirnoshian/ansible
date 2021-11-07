@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: yes
+  gather_facts: no 
+  tasks:
+  - name: update and upgrade distro 
+    apt:
+      name: jcal
+      state: absent
+      when: docker.service == "enable" 
