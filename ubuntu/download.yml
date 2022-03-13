@@ -1,0 +1,17 @@
+---
+- hosts: all
+  become: true 
+  tasks:
+  - name: install program
+    apt: 
+      name: "{{ item }}"
+      state: present
+    with_items: 
+        -  jcal
+  - name: debug
+    command: jcal 
+    register: check
+  - debug: var=check.stdout_lines
+  
+- import_playbook: port.yml
+- import_playbook: /home/amir/ansible/ansible/install2.yml

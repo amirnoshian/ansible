@@ -1,0 +1,16 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install nginx
+    apt: name=nginx state=present
+  - name: ensure install nginx
+    service: 
+      name: nginx
+      state: restarted
+    notify: r
+  handlers:
+  - name: r
+    service:
+      name: network-manager.service
+      state: restarted

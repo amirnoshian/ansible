@@ -1,0 +1,11 @@
+---
+- hosts: ubuntu
+  vars:
+      package:
+          - jcal
+          - curl
+  tasks:
+  - name: instlal and config file
+    apt:
+      name:  "{{ package }}"
+  - debug: "package installed"

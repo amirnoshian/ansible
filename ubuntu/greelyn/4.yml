@@ -1,6 +1,0 @@
----
-- hosts: all
-  become: true
-  tasks:
-  - name: install jacal
-    shell: sudo apt update

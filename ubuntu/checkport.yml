@@ -1,0 +1,11 @@
+---
+- hosts: all
+  become: true
+  gather_facts: true
+  tasks:
+  - name: stop and start port
+    wait_for:
+      port: 55
+      state: stopped
+    msg: "stopped prot"
+  

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Allow all access to tcp port 80
+    community.general.ufw:
+       port: '80'
+       proto: tcp
+       state: enabled
+    tags: port

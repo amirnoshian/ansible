@@ -6,4 +6,3 @@
     apt:
       name: sl
       state: latest
-  #  when: ansible_distribution == "debian"

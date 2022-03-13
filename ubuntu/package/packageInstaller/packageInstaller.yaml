@@ -1,0 +1,12 @@
+---
+- hosts: ubuntu
+  gather_facts: false
+  tasks:
+  # Test if docker is installed
+  - name: Gather package facts
+    ansible.builtin.package_facts:
+      manager: auto
+  - name: Install docker if not present
+    import_role:
+        name: docker
+    when: "'docker-ce' not in ansible_facts.packages"

@@ -1,0 +1,10 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - debug:
+      msg: task1
+  - name: include task
+    import_tasks: 3.yml
+  
+

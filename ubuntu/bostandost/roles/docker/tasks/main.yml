@@ -1,0 +1,6 @@
+---
+- name:
+  apt:
+    name: docker
+    state: present
+      

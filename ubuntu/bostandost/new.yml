@@ -1,0 +1,16 @@
+---
+- hosts: ubuntu
+  vars:
+    item:
+      - docker-compose
+      - docker
+  tasks:
+  - name: Gather the package facts
+    ansible.builtin.package_facts:
+      manager: auto
+
+  - name: Print the package facts
+    ansible.builtin.debug:
+      var: ansible_facts.packages
+
+

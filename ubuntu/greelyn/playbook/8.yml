@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: true
+  gather_facts: no
+  tasks:
+  - name:
+    shell: echo $API-KEY
+    environment:
+      api_key: " {{my_api_key}}"
+    register: echo_result
+  - name: 
+    debug: var=echo_result_stdout

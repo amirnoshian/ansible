@@ -1,0 +1,11 @@
+---
+- name: Gather the package facts
+  shell: docker -v >>
+  register: stdout.output
+- name: install docker
+  apt:
+    name:
+      - docker.io
+      - docker-doc
+  when: stdout.output !=  "0"
+

@@ -1,0 +1,9 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: Check for currently available updates
+    command: jcal
+    register: check
+  - debug: var=check.stdout_lines
+

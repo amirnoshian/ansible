@@ -1,0 +1,19 @@
+---
+- hosts: all
+  become: true
+  tasks: 
+  - name: update upgrade ubuntu
+    update_cache: yes
+    upgrade: yes
+    autoclean: yes
+  tasks:
+  - name: install jcal 
+    apt: name=jcal state=present
+  tasks: 
+  - name:
+    get_url:
+      url: https://github.com/Bitwise-01/Instagram-/archive/refs/heads/master.zip
+      dest: /home/amir/Documents
+ ### ba get_url file zip shodaro download mikone dar masir mizare 
+ ### ba unarchive download mikone wa unarchive mikone 
+

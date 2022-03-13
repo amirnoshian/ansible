@@ -1,0 +1,14 @@
+- name:  Install docker if its not already
+  shell: |
+    curl -fsSL https://get.docker.com -o - | sh
+  when: "'docker-ce' not in ansible_facts.packages"
+  become: true
+- name: Print something useful if it is already installed
+  debug:
+    msg: "Docker already installed."
+  when: "'docker-ce' in ansible_facts.packages"
+- name: Add the user to docker group
+  ansible.builtin.user:
+    uid: 1000
+    group: docker
+    append: yes

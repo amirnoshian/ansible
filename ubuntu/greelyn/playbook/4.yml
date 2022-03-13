@@ -1,0 +1,8 @@
+---
+- hosts: all
+  become: true
+  tasks:
+  - name: install jcal or remove
+    apt:
+      name: jcal
+      state: present

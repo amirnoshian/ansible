@@ -1,0 +1,15 @@
+---
+- hosts: ubuntu
+  become: true
+  pre_tasks:
+  - name: install jcal
+    apt: upgrade=dist update_cache=yes
+
+  handlers:
+    - name: restart
+      service: name=apache2  state=restarted
+
+  tasks: 
+  - name: change something
+    command: echo change to something
+    notify: restart

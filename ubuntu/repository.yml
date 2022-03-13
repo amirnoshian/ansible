@@ -1,0 +1,13 @@
+---
+- hosts: all 
+  tasks:
+  - name: checking service status
+    command: systemctl status "{{ with_items }}"
+    with_items:
+    - apache2
+    register: result
+    ignore_errors: yes
+  - name: showing report
+    debug:
+     var: result
+

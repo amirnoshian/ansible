@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  become: true
+  tasks:
+  - name: addrepository
+    ansible.builtin.apt_repository:
+      repo: ppa:nginx/stable
+      state: present
+   

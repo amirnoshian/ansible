@@ -1,9 +1,16 @@
 ---
-- hosts: ubuntu
+- hosts: localhost
   become: true
-  tasks: 
-  - name: stop and start service
+  vars: 
+     package: ssh
+     package_state: reloaded
+  tasks:
+  - name:
     service:
-      name: apache2
-      state: started
-      enabled: no
+      name: "{{ package }}"
+      state: "{{ package_state }}"
+    register: package
+
+
+  - debug:
+      var: package

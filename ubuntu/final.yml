@@ -1,0 +1,43 @@
+---
+- hosts: all
+  gather_facts: yes
+  become: yes
+  pre_tasks:
+  - name: update and upgrade system
+    apt: 
+     update_cache: yes
+     autoclean: yes
+    when: ansible_distribution == "Ubuntu"
+  tasks:
+  - name: add repository in ubuntu 
+    ansible.builtin.apt_repository:
+      repo: "{{ item }}"
+      state: present
+    with_items:
+       - ppa:webupd8team/y-ppa-manager 
+  tasks:
+  - name: download and install program and set permission (terraform)
+    ansible.builtin.unarchive:
+      src: https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip
+      dest: /usr/local/bin
+      owner: root
+      remote_src: yes
+ 
+
+  tasks: 
+  - name: change line in folder
+    lineinfile:
+      path: /home/amir/3.txt
+      regexp: "hi"
+      line:  "shi"
+  tasks:
+  - name: install ap or remove 
+    apt: name=jcal state=present
+  tasks: 
+  - name: enable and dissable port iptables
+    ansible.builtin.iptables: 
+      chain: INPUT
+      source: 10.12.15.20
+      dst_range: 192.168.0.0
+      jump: ACCEPT
+  tags: port

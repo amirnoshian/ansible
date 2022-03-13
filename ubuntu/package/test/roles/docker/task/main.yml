@@ -1,0 +1,4 @@
+- name: instlal docker 
+  apt:
+    name: docker.io
+    state: present

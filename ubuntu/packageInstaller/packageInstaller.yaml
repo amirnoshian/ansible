@@ -1,0 +1,22 @@
+---
+- hosts: all
+  gather_facts: false
+  tasks:
+  # Test if docker is installed
+  - name: Gather package facts
+    ansible.builtin.package_facts:
+      manager: auto
+  - name: Install docker if not present
+    ansible.builtin.import_tasks: dockerInstaller.yaml
+    when: "'docker-ce' not in ansible_facts.packages"
+    become: true
+  # Test if docker-compose is installed
+  - name: Check is docer-compose installed
+    shell: command -v docker-compose >/dev/null 2>&1
+    register: is_docker_compose_install
+    ignore_errors: yes
+  - name: Install docker-compose
+    ansible.builtin.import_tasks: dockerComposeInstaller.yaml
+    become: true
+    when: "{{ is_docker_compose_install.rc }}"
+

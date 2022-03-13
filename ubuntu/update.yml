@@ -1,0 +1,31 @@
+---
+- hosts: ubuntu
+  become: yes
+  tasks:
+  - name:
+    ansible.builtin.apt_repository:
+      repo: "{{ item }}" 
+      state: absent
+    with_items: 
+       - ppa:mc3man/mpv-tests
+       - ppa:webupd8team/y-ppa-manager
+  pre_tasks:
+  - name: update and upgrade system
+    apt:
+      autoclean: yes
+      update_cache: yes
+  tasks:
+  - name:
+    unarchive: 
+       src: https://releases.hashicorp.com/terraform/1.0.4/terraform_1.0.4_linux_amd64.zip
+       dest: /us/local/bin
+       rempte_src: yes
+       owner: root
+       mood: 0644
+       group: root
+  tasks:
+  - name: instll unzip
+    apt: 
+      name: unzip
+      state: absent
+

@@ -10,13 +10,13 @@
   - name:
     apt:
       name: sl
-      state: latest
+      state: absent
   tasks:
   - name:
     tags: jcal
     apt:
       name: jcal
-      state: latest
+      state: absent
   - name:
     tags: tmux
     apt:

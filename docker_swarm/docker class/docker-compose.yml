@@ -1,0 +1,11 @@
+version: '3.7'
+services:
+  myubuntu:
+      image: ubuntu:latest
+      ports:
+        - "5100:80"
+  ubuntu2:
+      image: nginx:latest
+
+
+
